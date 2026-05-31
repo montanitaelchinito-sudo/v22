@@ -1,0 +1,52 @@
+
+script_key = "KEYAUTH-YV9TAc-c0CVST-qwTN46-5LpM4b-lZc7Xq-TLtamo"
+
+-- ============================================
+-- LISTA DE KEYS VÁLIDAS
+-- ============================================
+local ValidKeys = {
+    "KEYAUTH-YV9TAc-c0CVST-qwTN46-5LpM4b-lZc7Xq-TLtamo",
+    "KEYAUTH-hXNNq8-M4xcdn-kXUZSc-16D8on-9HdCLq-KOOcvp",
+    "KEYAUTH-QAM8HQ-O0ejSK-BCQpzM-GZFqlx-cHCs4i-Kzuj52",
+    "KEYAUTH-PVlSVD-Yl6AG3-FfR2Qa-0MoRU8-QUJGUI-IxfH59",
+}
+
+-- ============================================
+-- FUNCIÓN VALIDAR KEY
+-- ============================================
+local function ValidateKey(key)
+    local CleanedKey = key:upper():gsub(" ", "")
+    for _, ValidKey in ipairs(ValidKeys) do
+        if CleanedKey == ValidKey:upper():gsub(" ", "") then
+            return true
+        end
+    end
+    return false
+end
+
+-- ============================================
+-- VALIDACIÓN
+-- ============================================
+if ValidateKey(script_key) then
+    print("✅ Licencia válida - Cargando script...")
+    
+    local success, err = pcall(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/montanitaelchinito-sudo/v22/refs/heads/main/www"))()
+    end)
+    
+    if not success then
+        print("❌ Error al cargar: " .. tostring(err))
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "❌ Error",
+            Text = "No se pudo cargar el script. Verifica el link.",
+            Duration = 5
+        })
+    end
+else
+    print("❌ Licencia inválida")
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+        Title = "❌ Acceso Denegado",
+        Text = "Tu licencia no es válida",
+        Duration = 5
+    })
+end
